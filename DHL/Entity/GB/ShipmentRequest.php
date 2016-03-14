@@ -46,7 +46,7 @@ class ShipmentRequest extends Base
      * @var string
      * Service XSD
      */
-    protected $_serviceXSD = 'ship-val-global-req.xsd';
+    protected $_serviceXSD = 'ShipmentRequest.xsd';
 
     /**
      * Display the schema version

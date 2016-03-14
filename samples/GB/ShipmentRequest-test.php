@@ -27,17 +27,21 @@ use DHL\Entity\GB\ShipmentRequest;
 use DHL\Client\Web as WebserviceClient;
 use DHL\Datatype\GB\Piece;
 use DHL\Datatype\GB\SpecialService;
+use DHL\Lib\Util;
 
 require(__DIR__ . '/../../init.php');
 
 // DHL Settings
 $dhl = $config['dhl'];
 
+//Create a util object
+$util = new Util();
+
 // Test a ShipmentRequestRequest using DHL XML API
 $sample = new ShipmentRequest();
 
 // Set values of the request
-$sample->MessageTime = '2001-12-17T09:30:47-05:00';
+$sample->MessageTime = '2016-03-14T09:30:47-05:00';
 $sample->MessageReference = '1234567890123456789012345678901';
 $sample->SiteID = $dhl['id'];
 $sample->Password = $dhl['pass'];
@@ -106,7 +110,7 @@ $sample->ShipmentDetails->Date = date('Y-m-d');
 $sample->ShipmentDetails->Contents = 'AM international shipment contents';
 $sample->ShipmentDetails->DoorTo = 'DD';
 $sample->ShipmentDetails->DimensionUnit = 'I';
-$sample->ShipmentDetails->InsuredAmount = '1000.00';
+$sample->ShipmentDetails->InsuredAmount = '100.00';
 $sample->ShipmentDetails->PackageType = 'EE';
 $sample->ShipmentDetails->IsDutiable = 'Y';
 $sample->ShipmentDetails->CurrencyCode = 'USD';
@@ -115,12 +119,12 @@ $sample->Shipper->CompanyName = 'IBM Corporation';
 $sample->Shipper->RegisteredAccount = '751008818';
 $sample->Shipper->addAddressLine('1 New Orchard Road');
 $sample->Shipper->addAddressLine('Armonk');
-$sample->Shipper->City = 'New York';
-$sample->Shipper->Division = 'ny';
-$sample->Shipper->DivisionCode = 'ny';
-$sample->Shipper->PostalCode = '10504';
-$sample->Shipper->CountryCode = 'US';
-$sample->Shipper->CountryName = 'United States Of America';
+$sample->Shipper->City = 'Montreal';
+$sample->Shipper->Division = 'qc';
+$sample->Shipper->DivisionCode = 'qc';
+$sample->Shipper->PostalCode = 'H4E2B2';
+$sample->Shipper->CountryCode = 'CA';
+$sample->Shipper->CountryName = 'Canada';
 $sample->Shipper->Contact->PersonName = 'Mr peter';
 $sample->Shipper->Contact->PhoneNumber = '1 905 8613402';
 $sample->Shipper->Contact->PhoneExtension = '3403';
@@ -143,18 +147,29 @@ $sample->LabelImageFormat = 'PDF';
 $start = microtime(true);
 $sample_xml = $sample->toXML();
 
-$sample_arr = str_split($sample_xml);
-foreach ($sample_arr as $key => $value) {
-	echo $value;
-	echo ' ';
-}
+echo $util->toHtml($sample_xml);
+
+//echo '===============================================';
 
 $client = new WebserviceClient('staging');
 $xml = $client->call($sample);
 echo PHP_EOL . 'Executed in ' . (microtime(true) - $start) . ' seconds.' . PHP_EOL;
 
-// $response = new ShipmentResponse();
-// $response->initFromXML($xml);
+$response = new ShipmentResponse();
+$response->initFromXML($xml);
 
-echo $xml . PHP_EOL; 
-//. $response->toXML();
+echo $util->toHtml($response->toXML());
+
+// Store it as a . PDF file in the filesystem
+//file_put_contents('dhl-label.pdf', base64_decode($response->LabelImage->OutputImage));
+
+
+// If you want to display it in the browser
+// $data = base64_decode($response->LabelImage->OutputImage);
+// if ($data)
+// {
+//     header('Content-Type: application/pdf');
+//     header('Content-Length: ' . strlen($data));
+//     echo $data;
+// }
+

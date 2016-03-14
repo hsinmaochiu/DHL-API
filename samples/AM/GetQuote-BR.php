@@ -25,11 +25,15 @@
 use DHL\Entity\AM\GetQuote;
 use DHL\Datatype\AM\PieceType;
 use DHL\Client\Web as WebserviceClient;
+use DHL\Lib\Util;
 
 require(__DIR__ . '/../../init.php');
 
 // DHL Settings
 $dhl = $config['dhl'];
+
+//Create a util object
+$util = new Util();
 
 // Test a getQuote using DHL XML API
 $sample = new GetQuote();
@@ -87,48 +91,51 @@ $test = '<?xml version="1.0" encoding="UTF-8"?>
         <MessageTime>2002-08-20T11:28:56.000-08:00</MessageTime>
         <MessageReference>1234567890123456789012345678901</MessageReference>
         <SiteID>UPSStore459</SiteID>
-<Password>xFiyPkrK95</Password>
+        <Password>xFiyPkrK95</Password>
       </ServiceHeader>
     </Request>
     <From>
-	   <CountryCode>CZ</CountryCode>
-	   <Postalcode>10000</Postalcode>
-	   <City>PRAGUE</City>
-	  </From>
+      <CountryCode>BR</CountryCode>
+      <Postalcode>04304</Postalcode>
+    </From>
     <BkgDetails>
-   <PaymentCountryCode>CZ</PaymentCountryCode>
-   <Date>2016-03-14</Date>
-   <ReadyTime>PT10H21M</ReadyTime>
-   <ReadyTimeGMTOffset>+01:00</ReadyTimeGMTOffset>
-   <DimensionUnit>CM</DimensionUnit>
-   <WeightUnit>KG</WeightUnit>
-   <Pieces>
-    <Piece>
-     <PieceID>1</PieceID>
-     <Height>10</Height>
-     <Depth>5</Depth>
-     <Width>10</Width>
-     <Weight>10</Weight>
-    </Piece>
-   </Pieces>
-   <IsDutiable>N</IsDutiable>
-  </BkgDetails>
+      <PaymentCountryCode>BR</PaymentCountryCode>
+      <Date>2016-03-24</Date>
+      <ReadyTime>PT10H21M</ReadyTime>
+      <ReadyTimeGMTOffset>+01:00</ReadyTimeGMTOffset>
+      <DimensionUnit>CM</DimensionUnit>
+      <WeightUnit>KG</WeightUnit>
+      <Pieces>
+        <Piece>
+          <PieceID>1</PieceID>
+          <Height>10</Height>
+          <Depth>20</Depth>
+          <Width>30</Width>
+          <Weight>10.0</Weight>
+        </Piece>
+      </Pieces>      
+      <IsDutiable>Y</IsDutiable>
+      <NetworkTypeCode>AL</NetworkTypeCode>   
+    </BkgDetails>
     <To>
-      <CountryCode>SE</CountryCode>
-	   <Postalcode>10054</Postalcode>
-	   <City>STOCKHOLM</City>
-    </To>   
+      <CountryCode>US</CountryCode>
+      <Postalcode>33324</Postalcode>
+    </To>
+   <Dutiable>
+      <DeclaredCurrency>USD</DeclaredCurrency>
+      <DeclaredValue>1002.0</DeclaredValue>
+    </Dutiable>
   </GetQuote>
 </p:DCTRequest>
 
 ';
 
-
+echo $util->toHtml($test);
 
 $client = new WebserviceClient('staging');
 $xml = $client->call($test);
 echo PHP_EOL . 'Executed in ' . (microtime(true) - $start) . ' seconds.' . PHP_EOL;
-echo $xml . PHP_EOL;
+echo $util->toHtml($xml);
 
 // $xml=simplexml_load_string($xml) or die("Error: Cannot create object");
 // print_r($xml);
