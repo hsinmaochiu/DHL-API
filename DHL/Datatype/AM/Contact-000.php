@@ -73,19 +73,11 @@ class Contact extends Base
             'subobject' => false,
             'comment' => 'Telex number and answer back code',
             'maxLength' => '25',
-        ),         
-        // 'Email' => array(
-        //     'type' => 'Email',
-        //     'required' => false,
-        //     'subobject' => true,
-        // ), 
-        
+        ), 
         'Email' => array(
-            'type' => 'EmailAddress',
+            'type' => 'Email',
             'required' => false,
-            'subobject' => false,
-            'comment' => 'Email address containing \'@\'',
-            'maxLength' => '50',
-        )
+            'subobject' => true,
+        ), 
     );
 }

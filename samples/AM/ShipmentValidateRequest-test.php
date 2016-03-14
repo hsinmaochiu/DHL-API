@@ -22,11 +22,11 @@
  * @version     0.1
  */
 
-use DHL\Entity\GB\ShipmentResponse;
-use DHL\Entity\GB\ShipmentRequest;
+use DHL\Entity\AM\ShipmentValidateResponse;
+use DHL\Entity\AM\ShipmentValidateRequest;
 use DHL\Client\Web as WebserviceClient;
-use DHL\Datatype\GB\Piece;
-use DHL\Datatype\GB\SpecialService;
+use DHL\Datatype\AM\Piece;
+use DHL\Datatype\AM\SpecialService;
 
 require(__DIR__ . '/../../init.php');
 
@@ -34,14 +34,14 @@ require(__DIR__ . '/../../init.php');
 $dhl = $config['dhl'];
 
 // Test a ShipmentRequestRequest using DHL XML API
-$sample = new ShipmentRequest();
+$sample = new ShipmentValidateRequest();
 
 // Set values of the request
 $sample->MessageTime = '2001-12-17T09:30:47-05:00';
 $sample->MessageReference = '1234567890123456789012345678901';
 $sample->SiteID = $dhl['id'];
 $sample->Password = $dhl['pass'];
-$sample->RegionCode = 'AM';
+//$sample->RegionCode = 'AM';
 $sample->RequestedPickupTime = 'Y';
 $sample->NewShipper = 'Y';
 $sample->LanguageCode = 'en';
@@ -143,18 +143,23 @@ $sample->LabelImageFormat = 'PDF';
 $start = microtime(true);
 $sample_xml = $sample->toXML();
 
+// $sample_xml=simplexml_load_string($sample_xml) or die("Error: Cannot create object");
+// print_r($sample_xml);
 $sample_arr = str_split($sample_xml);
 foreach ($sample_arr as $key => $value) {
 	echo $value;
 	echo ' ';
 }
 
+
+echo '===============================================';
+
 $client = new WebserviceClient('staging');
 $xml = $client->call($sample);
 echo PHP_EOL . 'Executed in ' . (microtime(true) - $start) . ' seconds.' . PHP_EOL;
 
-// $response = new ShipmentResponse();
+// $response = new ShipmentValidateResponse();
 // $response->initFromXML($xml);
+// echo $xml . PHP_EOL . $response->toXML();
 
-echo $xml . PHP_EOL; 
-//. $response->toXML();
+echo $xml;

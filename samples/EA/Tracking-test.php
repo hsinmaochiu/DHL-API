@@ -42,10 +42,12 @@ $request->LevelOfDetails = 'ALL_CHECK_POINTS';
 $request->PiecesEnabled = 'S';
 
 echo $request->toXML();
-echo "==================================================================";
 $client = new WebserviceClient();
 $xml = $client->call($request);
 
 $result = new DHL\Entity\EA\TrackingResponse();
 $result->initFromXML($xml);
-var_dump($result->toXML());
+echo $result->toXML();
+$xml = $result->toXML();
+$xml=simplexml_load_string($xml) or die("Error: Cannot create object");
+print_r($xml);

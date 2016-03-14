@@ -15,20 +15,20 @@
  */
 
 /**
- * File:        ShipmentValidateRequest.php
+ * File:        ShipmentRequest.php
  * Project:     DHL API
  *
  * @author      Al-Fallouji Bashar
  * @version     0.1
  */
 
-namespace DHL\Entity\AM; 
+namespace DHL\Entity\GB; 
 use DHL\Entity\Base;
 
 /**
- * ShipmentValidateRequest Request model for DHL API
+ * ShipmentRequest Request model for DHL API
  */
-class ShipmentValidateRequest extends Base
+class ShipmentRequest extends Base
 {
     /**
      * Is this object a subobject
@@ -40,19 +40,34 @@ class ShipmentValidateRequest extends Base
      * Name of the service
      * @var string
      */
-    protected $_serviceName = 'ShipmentValidateRequest';
+    protected $_serviceName = 'ShipmentRequest';
 
     /**
      * @var string
      * Service XSD
      */
-    protected $_serviceXSD = 'ship-val-global-req.xsd';
+    protected $_serviceXSD = 'ShipmentRequest.xsd';
+
+    /**
+     * Display the schema version
+     * @var boolean
+     */
+    protected $_displaySchemaVersion = true;
 
     /**
      * Parameters to be send in the body
      * @var array
      */
     protected $_bodyParams = array(
+        'RegionCode' => array(
+            'type' => 'string',
+            'required' => false,
+            'subobject' => false,
+            'comment' => 'RegionCode',
+            'minLength' => '2',
+            'maxLength' => '2',
+            'enumeration' => 'AP,EU,AM',
+        ), 
         'RequestedPickupTime' => array(
             'type' => 'string',
             'required' => false,
@@ -68,6 +83,7 @@ class ShipmentValidateRequest extends Base
             'required' => false,
             'subobject' => false,
             'comment' => 'ISO Language Code',
+            'maxLength' => '2',
         ), 
         'PiecesEnabled' => array(
             'type' => 'string',
@@ -116,15 +132,15 @@ class ShipmentValidateRequest extends Base
             'required' => false,
             'subobject' => true,
         ), 
-        // 'SpecialService' => array(
-        //     'type' => 'SpecialService',
-        //     'required' => false,
-        //     'subobject' => true,
-        // ), 
         'SpecialService' => array(
             'disableParentNode' => true,
             'multivalues' => true,
             'type' => 'SpecialService',
+            'required' => false,
+            'subobject' => true,
+        ), 
+        'Notification' => array(
+            'type' => 'Notification',
             'required' => false,
             'subobject' => true,
         ), 
@@ -144,7 +160,8 @@ class ShipmentValidateRequest extends Base
             'subobject' => false,
         ), 
         'DocImages' => array(
-            'type' => 'DocImages',
+            'type' => 'DocImage',
+            'multivalues' => true,
             'required' => false,
             'subobject' => true,
         ), 

@@ -46,7 +46,7 @@ class ShipmentValidateRequest extends Base
      * @var string
      * Service XSD
      */
-    protected $_serviceXSD = 'ship-val-global-req.xsd';
+    protected $_serviceXSD = 'ShipmentValidateRequest.xsd';
 
     /**
      * Parameters to be send in the body
@@ -116,14 +116,7 @@ class ShipmentValidateRequest extends Base
             'required' => false,
             'subobject' => true,
         ), 
-        // 'SpecialService' => array(
-        //     'type' => 'SpecialService',
-        //     'required' => false,
-        //     'subobject' => true,
-        // ), 
         'SpecialService' => array(
-            'disableParentNode' => true,
-            'multivalues' => true,
             'type' => 'SpecialService',
             'required' => false,
             'subobject' => true,

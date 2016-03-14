@@ -15,7 +15,7 @@
  */
 
 /**
- * File:        Consignee.php
+ * File:        Shipper.php
  * Project:     DHL API
  *
  * @author      Al-Fallouji Bashar
@@ -26,9 +26,9 @@ namespace DHL\Datatype\AM;
 use DHL\Datatype\Base;
 
 /**
- * Consignee Request model for DHL API
+ * Shipper Request model for DHL API
  */
-class Consignee extends Base
+class Shipper extends Base
 {
     /**
      * Is this object a subobject
@@ -41,26 +41,34 @@ class Consignee extends Base
      * @var array
      */
     protected $_params = array(
+        'ShipperID' => array(
+            'type' => 'ShipperID',
+            'required' => false,
+            'subobject' => false,
+            'comment' => 'Shipper\'s ID',
+            'maxLength' => '30',
+        ), 
         'CompanyName' => array(
             'type' => 'CompanyNameValidator',
             'required' => false,
             'subobject' => false,
             'comment' => 'Name of company / business',
             'maxLength' => '35',
-        ),         
-        // 'AddressLine' => array(
-        //     'type' => 'AddressLine',
-        //     'required' => false,
-        //     'subobject' => false,
-        //     'comment' => 'Address Line',
-        //     'maxLength' => '35',
-        // ), 
+        ), 
+        'RegisteredAccount' => array(
+            'type' => 'AccountNumber',
+            'required' => false,
+            'subobject' => false,
+            'comment' => 'DHL Account Number',
+            'maxInclusive' => '9999999999',
+            'minInclusive' => '100000000',
+        ), 
         'AddressLine' => array(
-            'type' => 'string',
-            'required' => true,
+            'type' => 'AddressLine',
+            'required' => false,
             'subobject' => false,
             'comment' => 'Address Line',
-            'multivalues' => true,
+            'maxLength' => '35',
         ), 
         'City' => array(
             'type' => 'City',
@@ -86,6 +94,20 @@ class Consignee extends Base
             'required' => false,
             'subobject' => false,
             'comment' => 'Full postal/zip code for address',
+        ), 
+        'OriginServiceAreaCode' => array(
+            'type' => 'OriginServiceAreaCode',
+            'required' => false,
+            'subobject' => false,
+            'comment' => 'OriginServiceAreaCode',
+            'maxLength' => '3',
+        ), 
+        'OriginFacilityCode' => array(
+            'type' => 'OriginFacilityCode',
+            'required' => false,
+            'subobject' => false,
+            'comment' => 'OriginFacilityCode',
+            'maxLength' => '3',
         ), 
         'CountryCode' => array(
             'type' => 'CountryCode',

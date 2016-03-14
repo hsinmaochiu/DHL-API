@@ -36,6 +36,7 @@ $sample = new GetQuote();
 $sample->SiteID = $dhl['id'];
 $sample->Password = $dhl['pass'];
 
+
 // Set values of the request
 $sample->MessageTime = '2002-08-20T11:28:56.000-08:00';
 $sample->MessageReference = '1234567890123456789012345678901';
@@ -44,21 +45,24 @@ $sample->BkgDetails->Date = date('Y-m-d');
 $piece = new PieceType();
 $piece->PieceID = 1;
 $piece->Height = 10;
-$piece->Depth = 5;
+$piece->Depth = 30;
 $piece->Width = 10;
-$piece->Weight = 10;
+$piece->Weight = 10.0;
 $sample->BkgDetails->addPiece($piece);
 $sample->BkgDetails->IsDutiable = 'N';
-// $sample->BkgDetails->QtdShp->QtdShpExChrg->SpecialServiceType = 'WY';
+$sample->BkgDetails->NetworkTypeCode = 'AL';
+$sample->BkgDetails->Date = '2011-08-22';
+//$sample->BkgDetails->QtdShp->QtdShpExChrg->SpecialServiceType = 'WY';
 $sample->BkgDetails->ReadyTime = 'PT10H21M';
 $sample->BkgDetails->ReadyTimeGMTOffset = '+01:00';
 $sample->BkgDetails->DimensionUnit = 'CM';
 $sample->BkgDetails->WeightUnit = 'KG';
 $sample->BkgDetails->PaymentCountryCode = 'CZ';
-// $sample->BkgDetails->IsDutiable = 'Y';
+$sample->BkgDetails->IsDutiable = 'N';
+$sample->BkgDetails->NetworkTypeCode = 'AL';
 
 // Request Paperless trade
-// $sample->BkgDetails->QtdShp->QtdShpExChrg->SpecialServiceType = 'WY';
+//$sample->BkgDetails->QtdShp->QtdShpExChrg->SpecialServiceType = 'WY';
 
 $sample->From->CountryCode = 'CZ';
 $sample->From->Postalcode = '10000';
@@ -67,28 +71,17 @@ $sample->From->City = 'PRAGUE';
 $sample->To->CountryCode = 'SE';
 $sample->To->Postalcode = '10054';
 $sample->To->City = 'STOCKHOLM';
-// $sample->Dutiable->DeclaredValue = '100.00';
-// $sample->Dutiable->DeclaredCurrency = 'CHF';
+//$sample->Dutiable->DeclaredValue = '100.00';
+//$sample->Dutiable->DeclaredCurrency = 'CHF';
 
 // Call DHL XML API
 $start = microtime(true);
-//echo $sample->toXML();
+echo $sample->toXML();
 $client = new WebserviceClient('staging');
-
-
-$sample_xml = $sample->toXML();
-// $sample_arr = explode(' ', $sample_xml);
-// foreach ($sample_arr as $key => $value) {
-// 	echo $value;
-// 	echo ' ';
-// }
-
-var_dump($sample_xml);
-echo '====================================';
-$xml = $client->call($sample_xml);
+$xml = $client->call($sample);
 echo PHP_EOL . 'Executed in ' . (microtime(true) - $start) . ' seconds.' . PHP_EOL;
 echo $xml . PHP_EOL;
-echo '----------------------------';
+
 // $xml=simplexml_load_string($xml) or die("Error: Cannot create object");
 // print_r($xml);
 

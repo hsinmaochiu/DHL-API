@@ -63,7 +63,6 @@ class Web
         $this->_mode = $mode;
     }
 
-
     /**
      * Call DHL Service
      * 
@@ -71,33 +70,19 @@ class Web
      * 
      * @return string DHL XML response string
      */
-    public function call($request)
+    public function call(Request $request)
     {
         if (!$ch = curl_init())
         {
             throw new \Exception('could not initialize curl');
         }
-        $xml = '';
-        if (is_object($request)) {
-            $xml = $request->toXML();
-            echo 'is object';
-        } else {
-            $xml = $request;
-
-        }
-
-//         echo '********************************************';
-//         print_r($xml);
-
-
-// echo '********************************************';
-
+$xml = is_object($request) ? $request->toXML(): $request;
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $this->_getUrl());
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_PORT , 443);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
         $result = curl_exec($ch);
         
         if (curl_error($ch))

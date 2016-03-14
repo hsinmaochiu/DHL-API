@@ -73,22 +73,63 @@ $sample->To->City = 'STOCKHOLM';
 // Call DHL XML API
 $start = microtime(true);
 //echo $sample->toXML();
+
+/*
+<SiteID>UPSStore459</SiteID>
+<Password>xFiyPkrK95</Password>
+*/
+
+$test = '<?xml version="1.0" encoding="UTF-8"?>
+<req:DOCRequest xmlns:req="http://www.dhl.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://www.dhl.com DCT-req.xsd">
+ <GetQuote>
+  <request>
+   <serviceheader>
+    <messagetime>2002-08-20T11:28:56.000-08:00</messagetime>
+    <messagereference>1234567890123456789012345678901</messagereference>
+    <siteid>UPSStore459</siteid>
+    <password>xFiyPkrK95</password>
+   </serviceheader>
+  </request>
+  <from>
+   <countrycode>CZ</countrycode>
+   <postalcode>10000</postalcode>
+   <city>PRAGUE</city>
+  </from>
+  <bkgdetails>
+   <paymentcountrycode>CZ</paymentcountrycode>
+   <date>2016-03-14</date>
+   <readytime>PT10H21M</readytime>
+   <readytimegmtoffset>+01:00</readytimegmtoffset>
+   <dimensionunit>CM</dimensionunit>
+   <weightunit>KG</weightunit>
+   <pieces>
+    <piece>
+     <pieceid>1</pieceid>
+     <height>10</height>
+     <depth>5</depth>
+     <width>10</width>
+     <weight>10</weight>
+    </piece>
+   </pieces>
+   <isdutiable>N</isdutiable>
+  </bkgdetails>
+  <to>
+   <countrycode>SE</countrycode>
+   <postalcode>10054</postalcode>
+   <city>STOCKHOLM</city>
+  </to>
+ </GetQuote>
+</req:DCTRequest>
+
+';
+
+
+
 $client = new WebserviceClient('staging');
-
-
-$sample_xml = $sample->toXML();
-// $sample_arr = explode(' ', $sample_xml);
-// foreach ($sample_arr as $key => $value) {
-// 	echo $value;
-// 	echo ' ';
-// }
-
-var_dump($sample_xml);
-echo '====================================';
-$xml = $client->call($sample_xml);
+$xml = $client->call($test);
 echo PHP_EOL . 'Executed in ' . (microtime(true) - $start) . ' seconds.' . PHP_EOL;
 echo $xml . PHP_EOL;
-echo '----------------------------';
+
 // $xml=simplexml_load_string($xml) or die("Error: Cannot create object");
 // print_r($xml);
 

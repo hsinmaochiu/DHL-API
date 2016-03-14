@@ -63,12 +63,19 @@ class Shipper extends Base
             'maxInclusive' => '9999999999',
             'minInclusive' => '100000000',
         ), 
+        // 'AddressLine' => array(
+        //     'type' => 'AddressLine',
+        //     'required' => false,
+        //     'subobject' => false,
+        //     'comment' => 'Address Line',
+        //     'maxLength' => '35',
+        // ), 
         'AddressLine' => array(
-            'type' => 'AddressLine',
-            'required' => false,
+            'type' => 'string',
+            'required' => true,
             'subobject' => false,
             'comment' => 'Address Line',
-            'maxLength' => '35',
+            'multivalues' => true,
         ), 
         'City' => array(
             'type' => 'City',
