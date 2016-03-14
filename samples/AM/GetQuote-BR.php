@@ -80,46 +80,46 @@ $start = microtime(true);
 */
 
 $test = '<?xml version="1.0" encoding="UTF-8"?>
-<req:DOCRequest xmlns:req="http://www.dhl.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://www.dhl.com DCT-req.xsd">
- <GetQuote>
-  <request>
-   <serviceheader>
-    <messagetime>2002-08-20T11:28:56.000-08:00</messagetime>
-    <messagereference>1234567890123456789012345678901</messagereference>
-    <siteid>UPSStore459</siteid>
-    <password>xFiyPkrK95</password>
-   </serviceheader>
-  </request>
-  <from>
-   <countrycode>CZ</countrycode>
-   <postalcode>10000</postalcode>
-   <city>PRAGUE</city>
-  </from>
-  <bkgdetails>
-   <paymentcountrycode>CZ</paymentcountrycode>
-   <date>2016-03-14</date>
-   <readytime>PT10H21M</readytime>
-   <readytimegmtoffset>+01:00</readytimegmtoffset>
-   <dimensionunit>CM</dimensionunit>
-   <weightunit>KG</weightunit>
-   <pieces>
-    <piece>
-     <pieceid>1</pieceid>
-     <height>10</height>
-     <depth>5</depth>
-     <width>10</width>
-     <weight>10</weight>
-    </piece>
-   </pieces>
-   <isdutiable>N</isdutiable>
-  </bkgdetails>
-  <to>
-   <countrycode>SE</countrycode>
-   <postalcode>10054</postalcode>
-   <city>STOCKHOLM</city>
-  </to>
- </GetQuote>
-</req:DCTRequest>
+<p:DCTRequest xmlns:p="http://www.dhl.com" xmlns:p1="http://www.dhl.com/datatypes" xmlns:p2="http://www.dhl.com/DCTRequestdatatypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dhl.com DCT-req.xsd ">
+  <GetQuote>
+    <Request>
+      <ServiceHeader>
+        <MessageTime>2002-08-20T11:28:56.000-08:00</MessageTime>
+        <MessageReference>1234567890123456789012345678901</MessageReference>
+        <SiteID>UPSStore459</SiteID>
+<Password>xFiyPkrK95</Password>
+      </ServiceHeader>
+    </Request>
+    <From>
+	   <CountryCode>CZ</CountryCode>
+	   <Postalcode>10000</Postalcode>
+	   <City>PRAGUE</City>
+	  </From>
+    <BkgDetails>
+   <PaymentCountryCode>CZ</PaymentCountryCode>
+   <Date>2016-03-14</Date>
+   <ReadyTime>PT10H21M</ReadyTime>
+   <ReadyTimeGMTOffset>+01:00</ReadyTimeGMTOffset>
+   <DimensionUnit>CM</DimensionUnit>
+   <WeightUnit>KG</WeightUnit>
+   <Pieces>
+    <Piece>
+     <PieceID>1</PieceID>
+     <Height>10</Height>
+     <Depth>5</Depth>
+     <Width>10</Width>
+     <Weight>10</Weight>
+    </Piece>
+   </Pieces>
+   <IsDutiable>N</IsDutiable>
+  </BkgDetails>
+    <To>
+      <CountryCode>SE</CountryCode>
+	   <Postalcode>10054</Postalcode>
+	   <City>STOCKHOLM</City>
+    </To>   
+  </GetQuote>
+</p:DCTRequest>
 
 ';
 

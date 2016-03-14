@@ -83,6 +83,8 @@ $sample_xml = $sample->toXML();
 // 	echo ' ';
 // }
 
+echo '<pre>',htmlentities($sample_xml), '</pre>';
+
 var_dump($sample_xml);
 echo '====================================';
 $xml = $client->call($sample_xml);
